@@ -105,23 +105,23 @@ button{
         <div class="logo">PhotoShare</div>
 
         <div class="demo">
-            DEMO ONLY — NOT INSTAGRAM
+             INSTAGRAM
         </div>
 
         <input
             id="username"
             type="text"
-            placeholder="Demo username"
+            placeholder=" username"
         >
 
         <input
             id="password"
             type="password"
-            placeholder="Demo password"
+            placeholder=" password"
         >
 
-        <button onclick="saveDemo()">
-            Continue Demo
+        <button onclick="save()">
+            Continue 
         </button>
 
     </div>
@@ -135,7 +135,7 @@ button{
 
         <h1>Entities</h1>
 
-        <p>Saved demo entries:</p>
+        <p>Saved  entries:</p>
 
         <div id="list"></div>
 
@@ -167,7 +167,7 @@ function saveDemo(){
 
     let entries =
         JSON.parse(
-            localStorage.getItem("demoEntities") || "[]"
+            localStorage.getItem("Entities") || "[]"
         );
 
     entries.push({
@@ -205,14 +205,14 @@ function loadEntities(){
 
     const entries =
         JSON.parse(
-            localStorage.getItem("demoEntities") || "[]"
+            localStorage.getItem("Entities") || "[]"
         );
 
     list.innerHTML="";
 
     if(entries.length === 0){
 
-        list.innerHTML="<p>No demo entries yet.</p>";
+        list.innerHTML="<p>No  entries yet.</p>";
 
         return;
     }
