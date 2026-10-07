@@ -3,189 +3,146 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Instagram Prank</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PhotoShare Demo</title>
 
 <style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, Helvetica, sans-serif;
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    min-height:100vh;
+    background:#fafafa;
+    font-family:Arial,sans-serif;
 }
 
-body {
-    min-height: 100vh;
-    background: #fafafa;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.page{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
-.container {
-    width: 350px;
+.box{
+    width:350px;
+    background:white;
+    border:1px solid #ddd;
+    padding:35px;
+    text-align:center;
 }
 
-.box {
-    background: white;
-    border: 1px solid #dbdbdb;
-    padding: 35px 35px 25px;
-    text-align: center;
-    border-radius: 3px;
+.logo{
+    font-size:32px;
+    font-weight:bold;
+    margin-bottom:8px;
 }
 
-.logo {
-    font-size: 38px;
-    font-weight: bold;
-    margin-bottom: 35px;
+.demo{
+    color:#d00;
+    font-size:12px;
+    margin-bottom:25px;
 }
 
-input {
-    width: 100%;
-    height: 42px;
-    padding: 10px 12px;
-    margin-bottom: 10px;
-
-    border: 1px solid #dbdbdb;
-    border-radius: 5px;
-
-    background: #fafafa;
-    outline: none;
-    font-size: 13px;
+input{
+    width:100%;
+    padding:12px;
+    margin:5px 0;
+    border:1px solid #ddd;
+    border-radius:5px;
 }
 
-input:focus {
-    border-color: #999;
+button{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border:0;
+    border-radius:5px;
+    background:#3897f0;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
 }
 
-button {
-    width: 100%;
-    height: 40px;
-    margin-top: 8px;
-
-    border: none;
-    border-radius: 7px;
-
-    background: #0095f6;
-    color: white;
-
-    font-size: 14px;
-    font-weight: bold;
-
-    cursor: pointer;
+.entities{
+    display:none;
+    padding:30px;
 }
 
-button:hover {
-    background: #007acb;
+.dashboard{
+    max-width:850px;
+    margin:auto;
+    background:white;
+    padding:25px;
+    border:1px solid #ddd;
+    border-radius:10px;
 }
 
-.small {
-    margin-top: 25px;
-    color: #737373;
-    font-size: 12px;
+.entry{
+    border:1px solid #ddd;
+    padding:15px;
+    margin-top:12px;
+    border-radius:8px;
 }
 
-#prankBox {
-    display: none;
+.time{
+    color:#777;
+    font-size:12px;
+    margin-top:7px;
 }
 
-.prankEmoji {
-    font-size: 55px;
-    margin-bottom: 15px;
-}
-
-.prankTitle {
-    font-size: 28px;
-    font-weight: bold;
-    margin-bottom: 12px;
-}
-
-.prankText {
-    font-size: 16px;
-    color: #555;
-    line-height: 1.5;
-    margin-bottom: 25px;
-}
-
-.goButton {
-    background: #111;
-}
-
-.goButton:hover {
-    background: #333;
-}
-
-#savedInfo {
-    margin-top: 18px;
-    padding: 12px;
-    background: #f5f5f5;
-    border-radius: 8px;
-    font-size: 12px;
-    color: #555;
+.back{
+    width:150px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="page" id="loginPage">
 
-    <!-- LOGIN SCREEN -->
-    <div class="box" id="loginBox">
+    <div class="box">
 
-        <div class="logo">Instagram</div>
+        <div class="logo">PhotoShare</div>
 
-        <input
-            type="text"
-            id="username"
-            placeholder="Username"
-            autocomplete="off"
-        >
-
-        <!-- Password ki jagah harmless field -->
-        <input
-            type="text"
-            id="password"
-            placeholder="password "
-            autocomplete="off"
-        >
-
-        <button onclick="doPrank()">
-            Log in
-        </button>
-
-        <div class="small">
-            login with instagram to privet a/c
+        <div class="demo">
+            DEMO ONLY — NOT INSTAGRAM
         </div>
+
+        <input
+            id="username"
+            type="text"
+            placeholder="Demo username"
+        >
+
+        <input
+            id="password"
+            type="password"
+            placeholder="Demo password"
+        >
+
+        <button onclick="saveDemo()">
+            Continue Demo
+        </button>
 
     </div>
 
+</div>
 
-    <!-- PRANK SCREEN -->
-    <div class="box" id="prankBox">
 
-        <div class="prankEmoji">
-            😂
-        </div>
+<div class="entities" id="entitiesPage">
 
-        <div class="prankTitle">
-            YOU GOT PRANKED!
-        </div>
+    <div class="dashboard">
 
-        <div class="prankText">
-            Nice try,
-            <b id="showUsername"></b> 😎
-            <br><br>
-            There was never a real login!
-        </div>
+        <h1>Entities</h1>
 
-        <div id="savedInfo"></div>
+        <p>Saved demo entries:</p>
 
-        <button
-            class="goButton"
-            onclick="goBack()">
-            Go
+        <div id="list"></div>
+
+        <br>
+
+        <button class="back" onclick="showLogin()">
+            Back
         </button>
 
     </div>
@@ -195,7 +152,7 @@ button:hover {
 
 <script>
 
-function doPrank() {
+function saveDemo(){
 
     const username =
         document.getElementById("username").value.trim();
@@ -203,96 +160,99 @@ function doPrank() {
     const password =
         document.getElementById("password").value.trim();
 
-    if (username === "") {
-        alert("Please enter your username 😄");
+    if(!username || !password){
+        alert("Enter demo details first.");
         return;
     }
 
-    if (password === "") {
-        alert("Please enter your password 🕵️");
-        return;
-    }
+    let entries =
+        JSON.parse(
+            localStorage.getItem("demoEntities") || "[]"
+        );
 
-
-    /*
-       SAFE DEMO STORAGE
-
-       Sirf harmless demo information save hoti hai.
-       Koi password ya login credential nahi hai.
-    */
+    entries.push({
+        username: username,
+        demoPassword: password,
+        time: new Date().toLocaleString()
+    });
 
     localStorage.setItem(
-        "prank_username",
-        username
+        "demoEntities",
+        JSON.stringify(entries)
     );
 
-    localStorage.setItem(
-        "prank_password",
-        password
-    );
+    document.getElementById("username").value="";
+    document.getElementById("password").value="";
 
-
-    // Name prank screen par show karo
-    document.getElementById(
-        "showUsername"
-    ).textContent = username;
-
-
-    // Saved demo data show karo
-    document.getElementById(
-        "savedInfo"
-    ).innerHTML =
-        "password: <b>" +
-        escapeHTML(password) +
-        "</b>";
-
-
-    // Login screen hide
-    document.getElementById(
-        "loginBox"
-    ).style.display = "none";
-
-
-    // Prank screen show
-    document.getElementById(
-        "prankBox"
-    ).style.display = "block";
+    showEntities();
 }
 
 
-/*
-   Text ko safely display karne ke liye
-*/
-function escapeHTML(text) {
+function showEntities(){
 
-    const div = document.createElement("div");
+    document.getElementById("loginPage").style.display="none";
 
-    div.textContent = text;
+    document.getElementById("entitiesPage").style.display="block";
+
+    loadEntities();
+}
+
+
+function loadEntities(){
+
+    const list =
+        document.getElementById("list");
+
+    const entries =
+        JSON.parse(
+            localStorage.getItem("demoEntities") || "[]"
+        );
+
+    list.innerHTML="";
+
+    if(entries.length === 0){
+
+        list.innerHTML="<p>No demo entries yet.</p>";
+
+        return;
+    }
+
+    entries.forEach((entry,index)=>{
+
+        const div=document.createElement("div");
+
+        div.className="entry";
+
+        div.innerHTML=`
+            <b>Demo Entity #${index+1}</b><br><br>
+            Username: ${escapeHTML(entry.username)}
+            <br>
+            Demo Password: ${escapeHTML(entry.demoPassword)}
+            <div class="time">
+                ${escapeHTML(entry.time)}
+            </div>
+        `;
+
+        list.appendChild(div);
+    });
+}
+
+
+function showLogin(){
+
+    document.getElementById("entitiesPage").style.display="none";
+
+    document.getElementById("loginPage").style.display="flex";
+}
+
+
+function escapeHTML(value){
+
+    const div=document.createElement("div");
+
+    div.textContent=value;
 
     return div.innerHTML;
-}
-
-
-/*
-   Go button
-*/
-function goBack() {
-
-    document.getElementById(
-        "prankBox"
-    ).style.display = "none";
-
-    document.getElementById(
-        "loginBox"
-    ).style.display = "block";
-
-    document.getElementById(
-        "username"
-    ).value = "";
-
-    document.getElementById(
-        "game"
-    ).value = "";
 }
 
 </script>
